@@ -8,7 +8,7 @@ function Bonocles:new(options)
   self.listeners = {}; -- function that run to get the last version of the watched variables
   self.results = {}; -- keeps the results of teh updates of every watched variable
   self.metaInfo = {}; -- contains meta info about what variables are we watching
-  self.printer = options.customPrinter or false; -- Help printing to the console (make sure to compile using "--console")
+  self.printer = options.customPrinter or false; -- activate printing to console
   self.palette = {
     "RED"   = {1.0,0.0,0.0,1.0},
     "BLUE"  = {0.0,0.0,1.0,1.0},
@@ -25,8 +25,53 @@ function Bonocles:new(options)
   self.watchedFilesInfo = {}; -- hold the output of love.filesystem.getInfo(file) for every file.
   -- Test to make sure that every given file exists
   for i,file in ipairs(self.watchedFiles) do
-    local fileInfo = love.filesystem.getInfo(file);
+    local fileInfo = love.filesystem.getInfo(file,fileInfo);
     assert(fileInfo,file .. ' must not exist or is in the wrong directory.');
     self.watchedFilesInfo[i] = fileInfo;
   end
 end
+
+function Bonocles:keypressed(key)
+  if self.active and key == self.debugToggle then
+    self.active = not self.active; -- Toggle the instance drawing
+  end
+end
+
+function Bonocles:print(text,justTxt)
+  if self.printer and not justTxt then
+    print("[Bonocles]: " .. text);
+  else
+    return "[Bonocles]: " .. text;
+  end
+end
+
+function Bonocles:watch(name,obj)
+  if type(obj) == 'function' then
+    self.print("Watching : " .. name);
+    table.insert(self.listeners,obj);
+    table.insert(self.names,name);
+  else
+    error("Obj to watch is not a function." ..
+          "Hint : wrap the obj in an anonymous function then return the object from it.");
+  end
+end
+
+function Bonocles:update()
+  for key,obj in ipairs(self.listeners) do -- Update Objects
+    if type(obj) == 'function'then
+      self.results[key] = obj() or 'Error!';
+    end
+   end
+   for i,file in ipairs(self.watchedFiles) do
+     local currentFileInfo = love.filesystem.getInfo(file,currentFileInfo);
+     if self.watchedFilesInfo[i].modtime ~= currentFileInfo.modtime then
+      self.watchedFilesInfo[i] = currentFileInfo;
+      love.filesystem.load('main.lua')();
+     end
+   end
+end
+
+
+
+
+return Bonocles;
