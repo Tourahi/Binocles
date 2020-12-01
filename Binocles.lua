@@ -10,10 +10,10 @@ function Bonocles:new(options)
   self.metaInfo = {}; -- contains meta info about what variables are we watching
   self.printer = options.customPrinter or false; -- activate printing to console
   self.palette = {
-    "RED"   = {1.0,0.0,0.0,1.0},
-    "BLUE"  = {0.0,0.0,1.0,1.0},
-    "GREEN" = {0.0,1.0,0.0,1.0},
-    "WHITE" = {1.0,1.0,1.0,1.0}
+    RED   = {1.0,0.0,0.0,1.0},
+    BLUE  = {0.0,0.0,1.0,1.0},
+    GREEN = {0.0,1.0,0.0,1.0},
+    WHITE = {1.0,1.0,1.0,1.0},
   };
 
   self.draw_x = options.draw_x or 0; -- x pos of the Bonocles instance (Used in :draw())
@@ -47,7 +47,7 @@ end
 
 function Bonocles:watch(name,obj)
   if type(obj) == 'function' then
-    self.print("Watching : " .. name);
+    self:print("Watching : " .. name);
     table.insert(self.listeners,obj);
     table.insert(self.names,name);
   else
@@ -65,13 +65,33 @@ function Bonocles:update()
    for i,file in ipairs(self.watchedFiles) do
      local currentFileInfo = love.filesystem.getInfo(file,currentFileInfo);
      if self.watchedFilesInfo[i].modtime ~= currentFileInfo.modtime then
+      self:print("Reloading");
       self.watchedFilesInfo[i] = currentFileInfo;
       love.filesystem.load('main.lua')();
      end
    end
 end
 
-
+function Bonocles:draw()
+  if self.active then
+    love.graphics.setColor(self.printColor);
+    local draw_y = self.draw_y;
+    local draw_x = self.draw_x;
+    for nameIndice,result in ipairs(self.results) do
+      if type(result) == 'number' or type(result) == 'string' then
+				love.graphics.print(self.names[nameIndice] .. " : " .. result, draw_x, (draw_y + 1) * 15)
+			elseif type(result) == 'table' then
+				love.graphics.print(self.names[nameIndice] .. " : Table:", draw_x, (draw_y + 1) * 15)
+				draw_y = draw_y + 1
+				for i,v in pairs(result) do
+					love.graphics.print("      " .. i .. " : " .. v, draw_x, (draw_y + 1) * 15)
+					draw_y = draw_y + 1
+				end
+			end
+			draw_y = draw_y + 1
+    end
+  end
+end
 
 
 return Bonocles;
