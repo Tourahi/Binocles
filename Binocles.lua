@@ -9,18 +9,11 @@ function Bonocles:new(options)
   self.results = {}; -- keeps the results of teh updates of every watched variable
   self.metaInfo = {}; -- contains meta info about what variables are we watching
   self.printer = options.customPrinter or false; -- activate printing to console
-  self.palette = {
-    RED   = {1.0,0.0,0.0,1.0},
-    BLUE  = {0.0,0.0,1.0,1.0},
-    GREEN = {0.0,1.0,0.0,1.0},
-    WHITE = {1.0,1.0,1.0,1.0},
-  };
-
   self.draw_x = options.draw_x or 0; -- x pos of the Bonocles instance (Used in :draw())
   self.draw_y = options.draw_y or 0; -- y pos of the Bonocles instance (Used in :draw())
-
-  self.printColor = options.printColor or self.palette["GREEN"]; -- text color (will be sent to love.graphics.setColor())
+  self.printColor = options.printColor or {0.0,1.0,0.0,1.0}; -- text color (will be sent to love.graphics.setColor())
   self.debugToggle = options.debugToggle or "0"; -- Toggle (change the satate of self.active)
+  self.consoleToggle = options.consoleToggle or "f1";
   self.watchedFiles = options.watchedFiles or {}; -- files to watch
   self.watchedFilesInfo = {}; -- hold the output of love.filesystem.getInfo(file) for every file.
   -- Test to make sure that every given file exists
@@ -34,14 +27,18 @@ end
 function Bonocles:keypressed(key)
   if self.active and key == self.debugToggle then
     self.active = not self.active; -- Toggle the instance drawing
+  elseif key == self.consoleToggle then
+    self:console();
   end
 end
 
-function Bonocles:print(text,justTxt)
-  if self.printer and not justTxt then
+function Bonocles:print(text,IO,option)
+  if self.printer and not IO and not option then
     print("[Bonocles]: " .. text);
+  elseif self.printer and option then
+    print("[Bonocles Options]: " .. text);
   else
-    return "[Bonocles]: " .. text;
+    io.write(text);
   end
 end
 
@@ -93,5 +90,42 @@ function Bonocles:draw()
   end
 end
 
+function Bonocles:deconstructeGlobal(str)
+  if string.find(str, '%.') then
+    local global = string.match(str, "(%w+)%.");
+    local dot = string.find(str, '.', 1, true)
+    local property = string.sub(str, dot+1);
+    return {
+      isTable  = true,
+      global   = global,
+      property = property
+    };
+  else
+    return {
+      isTable  = false,
+      global = str
+    };
+  end
+end
+
+function Bonocles:console()
+  self:print("[a]. Watch a Global.",false,true);
+  local choice = io.read("*l");
+  if choice == 'a' then
+    self:print("Global's name : ");
+    local global = io.read("*l");
+    local deconstructedGlobal = self:deconstructeGlobal(global);
+    local displayName  = global;
+    local varName  = deconstructedGlobal.global;
+    local Svarname = varName;
+    local varName = _G[varName];
+    if not deconstructedGlobal.isTable then
+       watcher:watch(displayName,function() return tostring(_G[Svarname]) end);
+    else
+      local property  = deconstructedGlobal.property;
+      watcher:watch(displayName,function() return tostring(varName[tostring(property)]) end);
+    end
+  end
+end
 
 return Bonocles;
