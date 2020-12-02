@@ -35,7 +35,7 @@ function Bonocles:new(options)
 end
 
 function Bonocles:keypressed(key)
-  if self.active and key == self.debugToggle then
+  if key == self.debugToggle then
     self.active = not self.active; -- Toggle the instance drawing
   elseif key == self.consoleToggle then
     self:console();
@@ -129,6 +129,10 @@ function Bonocles:deconstructeGlobal(str)
   end
 end
 
+function Bonocles.GlobalHasKey(key)
+  return _G[key] ~= nil;
+end
+
 function Bonocles:console()
   self:print("[a]. Watch a Global.",false,true);
   local choice = io.read("*l");
@@ -139,12 +143,16 @@ function Bonocles:console()
     local displayName  = global;
     local varName  = deconstructedGlobal.global;
     local Svarname = varName;
-    local varName = _G[varName];
-    if not deconstructedGlobal.isTable then
-       watcher:watch(displayName,function() return tostring(_G[Svarname]) end);
+    if self.GlobalHasKey(varName) then
+      local varName = _G[varName];
+      if not deconstructedGlobal.isTable then
+         watcher:watch(displayName,function() return tostring(_G[Svarname]) end);
+      else
+        local property  = deconstructedGlobal.property;
+        watcher:watch(displayName,function() return tostring(varName[tostring(property)]) end);
+      end
     else
-      local property  = deconstructedGlobal.property;
-      watcher:watch(displayName,function() return tostring(varName[tostring(property)]) end);
+      self:print("Global Does not exist.");
     end
   end
 end
