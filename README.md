@@ -52,6 +52,21 @@ function love.keypressed(key)
 end
 ```
 
+Options :
+
+```lua
+options.active -- if bonocles is active (drawing)  
+options.customPrinter -- activate printing to console
+options.draw_x -- x pos of the Bonocles instance (Used in :draw())
+options.draw_y  -- y pos of the Bonocles instance (Used in :draw())
+options.printColor -- text color (will be sent to love.graphics.setColor())
+options.debugToggle -- Toggle (change the satate of self.active)
+options.consoleToggle -- Start the interaction with the listener from the console
+options.colorToggle -- toggle to change the printing color 
+options.watchedFiles  -- files to watch
+
+```
+
 Console Example : 
 
 ![ConsoleEX](./public/imgs/ConsoleEX.png)
