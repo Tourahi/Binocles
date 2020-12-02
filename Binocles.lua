@@ -19,7 +19,7 @@ function Bonocles:new(options)
   self.draw_x = options.draw_x or 0; -- x pos of the Bonocles instance (Used in :draw())
   self.draw_y = options.draw_y or 0; -- y pos of the Bonocles instance (Used in :draw())
 
-  self.printColor = options.printColor or self.palette["WHITE"]; -- text color (will be sent to love.graphics.setColor())
+  self.printColor = options.printColor or self.palette["GREEN"]; -- text color (will be sent to love.graphics.setColor())
   self.debugToggle = options.debugToggle or "0"; -- Toggle (change the satate of self.active)
   self.watchedFiles = options.watchedFiles or {}; -- files to watch
   self.watchedFilesInfo = {}; -- hold the output of love.filesystem.getInfo(file) for every file.
@@ -65,9 +65,9 @@ function Bonocles:update()
    for i,file in ipairs(self.watchedFiles) do
      local currentFileInfo = love.filesystem.getInfo(file,currentFileInfo);
      if self.watchedFilesInfo[i].modtime ~= currentFileInfo.modtime then
-      self:print("Reloading");
       self.watchedFilesInfo[i] = currentFileInfo;
-      love.filesystem.load('main.lua')();
+      self:print("Changed file :"..file);
+      love.event.quit( "restart" );
      end
    end
 end
