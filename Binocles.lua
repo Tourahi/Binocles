@@ -11,11 +11,21 @@ function Bonocles:new(options)
   self.printer = options.customPrinter or false; -- activate printing to console
   self.draw_x = options.draw_x or 0; -- x pos of the Bonocles instance (Used in :draw())
   self.draw_y = options.draw_y or 0; -- y pos of the Bonocles instance (Used in :draw())
-  self.printColor = options.printColor or {0.0,1.0,0.0,1.0}; -- text color (will be sent to love.graphics.setColor())
+  self.currentColor = 2;
+  self.printColor = options.printColor or {1.0,1.0,1.0,1.0}; -- text color (will be sent to love.graphics.setColor())
   self.debugToggle = options.debugToggle or "0"; -- Toggle (change the satate of self.active)
   self.consoleToggle = options.consoleToggle or "f1";
   self.watchedFiles = options.watchedFiles or {}; -- files to watch
   self.watchedFilesInfo = {}; -- hold the output of love.filesystem.getInfo(file) for every file.
+  self.colorToggle = options.colorToggle or "f2";
+  self.colorPalette = {
+    --[[BLACK]] {0.0,0.0,0.0,1.0},
+    --[[WHITE]] {1.0,1.0,1.0,1.0},
+    --[[RED]]   {1.0,0.0,0.0,1.0},
+    --[[BLUE]]  {0.0,0.0,1.0,1.0},
+    --[[GREEN]] {0.0,1.0,0.0,1.0},
+  };
+  self.currentColorIndex = 2;
   -- Test to make sure that every given file exists
   for i,file in ipairs(self.watchedFiles) do
     local fileInfo = love.filesystem.getInfo(file,fileInfo);
@@ -29,7 +39,18 @@ function Bonocles:keypressed(key)
     self.active = not self.active; -- Toggle the instance drawing
   elseif key == self.consoleToggle then
     self:console();
+  elseif key == self.colorToggle then
+    self:changeColor();
   end
+end
+
+function Bonocles:changeColor()
+  local nbrColors = #self.colorPalette;
+  self.currentColorIndex = self.currentColorIndex + 1;
+  if self.currentColorIndex > nbrColors then
+    self.currentColorIndex = 1;
+  end
+  self.printColor = self.colorPalette[self.currentColorIndex];
 end
 
 function Bonocles:print(text,IO,option)
