@@ -18,6 +18,7 @@ function Bonocles:new(options)
   self.watchedFiles = options.watchedFiles or {}; -- files to watch
   self.watchedFilesInfo = {}; -- hold the output of love.filesystem.getInfo(file) for every file.
   self.colorToggle = options.colorToggle or "f2";
+  self.restart = options.restart or false; -- Restarts the game without relaunching the executable. This cleanly shuts down the main Lua state instance and creates a brand new one.
   self.colorPalette = {
     --[[BLACK]] {0.0,0.0,0.0,1.0},
     --[[WHITE]] {1.0,1.0,1.0,1.0},
@@ -85,7 +86,11 @@ function Bonocles:update()
      if self.watchedFilesInfo[i].modtime ~= currentFileInfo.modtime then
       self.watchedFilesInfo[i] = currentFileInfo;
       self:print("Changed file :"..file);
-      love.event.quit( "restart" );
+      if self.restart then
+        love.event.quit( "restart" );
+      else
+        love.filesystem.load(file)();
+      end
      end
    end
 end

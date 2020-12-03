@@ -1,7 +1,7 @@
 # Binocles
 Debugging Love2D in a simple way.
 
-Binocles si a module base on Monocle https://github.com/kjarvi/monocle. 
+Binocles si a module base on Monocle https://github.com/kjarvi/monocle.
 this module give the ability to easily :
   1. watch variables and complex expressions
   2. watch files and reload them when they change
@@ -62,11 +62,16 @@ options.draw_y  -- y pos of the Bonocles instance (Used in :draw())
 options.printColor -- text color (will be sent to love.graphics.setColor())
 options.debugToggle -- Toggle (change the satate of self.active)
 options.consoleToggle -- Start the interaction with the listener from the console
-options.colorToggle -- toggle to change the printing color 
+options.colorToggle -- toggle to change the printing color
 options.watchedFiles  -- files to watch
+
+options.restart --[[
+* if true :  Restarts the game without relaunching the executable. This cleanly shuts down the main Lua state instance and creates a brand new one.
+* if false : will reload only the watched file if he got modified (ctrl-s).
+]]--
 
 ```
 
-Console Example : 
+Console Example :
 
 ![ConsoleEX](./public/imgs/ConsoleEX.png)
