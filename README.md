@@ -71,11 +71,11 @@ options.restart --[[
 
 Console Example :
 
-![Screenshot from 2021-03-04 22-47-06](/public/imgs/Screenshot from 2021-03-04 22-47-06.png)
+![Screenshot from 2021-03-04 22-47-06](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-47-06.png)
 
 * Click "f3" : 
 
-![Screenshot from 2021-03-04 22-48-39](/public/imgs/Screenshot from 2021-03-04 22-48-39.png)
+![Screenshot from 2021-03-04 22-48-39](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-48-39.png)
 
-![Screenshot from 2021-03-04 22-48-52](/public/imgs/Screenshot from 2021-03-04 22-48-52.png)
+![Screenshot from 2021-03-04 22-48-52](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-48-52.png)
 
