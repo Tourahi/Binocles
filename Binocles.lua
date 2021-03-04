@@ -79,7 +79,6 @@ function Binocles:print(text,IO,option)
 end
 
 function Binocles:watch(name,obj)
-  -- local cb = function () return
   if type(obj) == 'function' then
     self:print("Watching : " .. name);
     table.insert(self.listeners,obj);
@@ -155,12 +154,29 @@ function Binocles.GlobalHasKey(key)
   return _G[key] ~= nil;
 end
 
+function makeTable(str)
+  local delim = {","};
+  local results = {}
+  local toutput = ""
+    for _,v in ipairs(delim) do
+        str = str:gsub("([%"..v.."]+)", "`%1`")
+    end
+    for item in str:gmatch("[^`]+") do if item ~= "," then table.insert(results, item) end end
+    return results;
+end
+
+
 function Binocles:console()
-  self:print("[a]. Watch a Global.",false,true);
-  local choice = io.read("*l");
-  if choice == 'a' then
-    self:print("Global's name : ");
-    local global = io.read("*l");
+  self:print("Variable name (Only globals): ");
+  local str = io.read("*l");
+  local globals = makeTable(str);
+  local toutput = "";
+  for _,v in ipairs(globals) do
+    toutput = toutput .. "'" .. v .. "',"
+  end
+
+  print("[" .. toutput .. "]")
+  for i,global in ipairs(globals) do
     local deconstructedGlobal = self:deconstructeGlobal(global);
     local displayName  = global;
     local varName  = deconstructedGlobal.global;
@@ -168,15 +184,16 @@ function Binocles:console()
     if self.GlobalHasKey(varName) then
       local varName = _G[varName];
       if not deconstructedGlobal.isTable then
-         watcher:watch(displayName,function() return tostring(_G[Svarname]) end);
+         self:watch(displayName,function() return tostring(_G[Svarname]) end);
       else
         local property  = deconstructedGlobal.property;
-        watcher:watch(displayName,function() return tostring(varName[tostring(property)]) end);
+        self:watch(displayName,function() return tostring(varName[tostring(property)]) end);
       end
     else
       self:print("Global Does not exist.");
     end
   end
+
 end
 
 local meta = {

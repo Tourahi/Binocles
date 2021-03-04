@@ -1,17 +1,19 @@
 Binocles = require("Binocles");
 
---Test variable
+--Test variables
 test = 0;
-yolo = true;
-
+local bool = false;
+pox = {
+  x = 10,
+  y = 20
+}
 function love.load(arg)
   Binocles();
     -- Watch the FPS
     Binocles:watch("FPS", function() return math.floor(1/love.timer.getDelta()) end);
     -- Watch the test global variable
     Binocles:watch("test",function() return test end);
-    Binocles:watch("yolo", function() return yolo end);
-    print(type(yolo));
+    Binocles:watch("bool",function() return bool end);
 end
 
 
@@ -25,5 +27,6 @@ end
 
 function love.keypressed(key)
   test = test + 1; -- inc test every time a key is pressed
+  bool = not bool; -- change bool variable
   Binocles:keypressed(key);
 end

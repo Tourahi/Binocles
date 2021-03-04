@@ -14,42 +14,36 @@ The setup of a basic main.lua file is as follows:
 Note : Make sure to run the game from the console or use --console so you can see the listener output.
 
 ```lua
-Object   = require "classicc";
-Binocles = require "binocles";
+Binocles = require("Binocles");
 
---Test variable
-test = 0;
+--Test variables
+local test = 0;
+local bool = false;
 
 function love.load(arg)
-  watcher = Binocles({
-      active = true,
-      customPrinter = true,
-      debugToggle =   'f1',
-      consoleToggle = 'f2',
-      colorToggle   = 'f3',
-      watchedFiles = {
-        'main.lua',
-      },
-    });
+  Binocles();
     -- Watch the FPS
-    watcher:watch("FPS", function() return math.floor(1/love.timer.getDelta()) end);
+    Binocles:watch("FPS", function() return math.floor(1/love.timer.getDelta()) end);
     -- Watch the test global variable
-    watcher:watch("test",function() return test end);
+    Binocles:watch("test",function() return test end);
+    Binocles:watch("bool",function() return bool end);
 end
 
 
 function love.update(dt)
-  watcher:update();
+  Binocles:update();
 end
 
 function love.draw()
-  watcher:draw();
+  Binocles:draw();
 end
 
 function love.keypressed(key)
   test = test + 1; -- inc test every time a key is pressed
-  watcher:keypressed(key);
+  bool = not bool; -- change bool variable
+  Binocles:keypressed(key);
 end
+
 ```
 
 Options :
@@ -74,7 +68,7 @@ options.restart --[[
 
 Console Example :
 
-![ConsoleEX](./public/imgs/ConsoleEX.png)
+
 
 
 
