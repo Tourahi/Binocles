@@ -64,7 +64,7 @@ options.watchedFiles  -- files to watch
 
 options.restart --[[
 * if true :  Restarts the game without relaunching the executable. This cleanly shuts down the main Lua state instance and creates a brand new one.
-* if false : will reload only the watched file if he got modified (ctrl-s).
+* if false : will reload only the watched file if it got modified (ctrl-s).
 ]]--
 
 ```
