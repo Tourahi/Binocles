@@ -71,11 +71,11 @@ options.restart --[[
 
 Console Example :
 
-![Screenshot from 2021-03-04 22-47-06](/home/maro/Git/gameDev/Binocles/public/imgs/Screenshot from 2021-03-04 22-47-06.png)
+![Screenshot from 2021-03-04 22-47-06](/public/imgs/Screenshot from 2021-03-04 22-47-06.png)
 
 * Click "f3" : 
 
-![Screenshot from 2021-03-04 22-48-39](/home/maro/Git/gameDev/Binocles/public/imgs/Screenshot from 2021-03-04 22-48-39.png)
+![Screenshot from 2021-03-04 22-48-39](/public/imgs/Screenshot from 2021-03-04 22-48-39.png)
 
-![Screenshot from 2021-03-04 22-48-52](/home/maro/Git/gameDev/Binocles/public/imgs/Screenshot from 2021-03-04 22-48-52.png)
+![Screenshot from 2021-03-04 22-48-52](/public/imgs/Screenshot from 2021-03-04 22-48-52.png)
 
