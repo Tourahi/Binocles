@@ -1,7 +1,7 @@
 # Binocles
 Debugging Love2D in a simple way.
 
-Binocles si a module base on Monocle https://github.com/kjarvi/monocle.
+Binocles is a module base on Monocle https://github.com/kjarvi/monocle.
 this module give the ability to easily :
   1. watch variables and complex expressions
   2. watch files and reload them when they change
@@ -75,3 +75,62 @@ options.restart --[[
 Console Example :
 
 ![ConsoleEX](./public/imgs/ConsoleEX.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Paragraphe | Enjeux         | Justification                                                |
+| ---------- | -------------- | ------------------------------------------------------------ |
+| 2          | informatif     | Ils nous ont informés que Le vaccin choisi par le gouvernement marocain provient de la société chinoise "Sinopharma" |
+| 2          | informatif     | Ils nous ont informés que  le vaccin a été testé sur près d’un million de personnes dans le monde |
+| 2          | influence      | Le commentaires du ministre de la santé Khalid Ait Taleb sur la qualité des tests et les essais |
+| 4          | informatif     | Ils nous ont informés que Le gouvernement prépare 2880 stations médicales |
+| 4          | influence      | Toute la population devrait être vaccinée d’ici la fin du mois de mars 2021 |
+| 4          | informatif     | Ils nous ont informés que La campagne de vaccination devrait débuter dans le courant du mois de décembre et que Le gouvernement marocain suit les recommandations de l’OMS et ciblera d’abord les personnels soignants, les personnes âgées et les individus à risque. |
+| 6          | positionnement | le positionnement de la part du Roi Mohammed  VI par rapport de cette campagne : il a donné l’impulsion de cette campagne à grande échelle. |
+| 6          | positionnement | de la part de Christian Leyens qui dit que le maroc a pris de bonnes mesures *grâce à Sa Majesté.* |
+|            |                |                                                              |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

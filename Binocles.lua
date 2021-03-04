@@ -1,8 +1,20 @@
--- Author : Tourahi Amine
--- Object   = require "classic"; -- Remove it from here if its erequired in the main.lua
-Bonocles = Object:extend("Bonocles");
+local Binocles = {};
+Binocles.__index = Bonocles;
 
-function Bonocles:new(options)
+local defaultOptions = {
+    active = true,
+    customPrinter = true,
+    debugToggle =   'f1',
+    consoleToggle = 'f2',
+    colorToggle   = 'f3',
+    restart = false,
+    watchedFiles = {
+      'main.lua',
+    },
+  };
+
+function Binocles:init(options)
+  options = options or defaultOptions;
   self.active = options.active or false;-- if bonocles is active (drawing)
   self.names  = {}; -- keeps the names of teh watched variables
   self.listeners = {}; -- function that run to get the last version of the watched variables
@@ -35,7 +47,9 @@ function Bonocles:new(options)
   end
 end
 
-function Bonocles:keypressed(key)
+
+
+function Binocles:keypressed(key)
   if key == self.debugToggle then
     self.active = not self.active; -- Toggle the instance drawing
   elseif key == self.consoleToggle then
@@ -45,7 +59,7 @@ function Bonocles:keypressed(key)
   end
 end
 
-function Bonocles:changeColor()
+function Binocles:changeColor()
   local nbrColors = #self.colorPalette;
   self.currentColorIndex = self.currentColorIndex + 1;
   if self.currentColorIndex > nbrColors then
@@ -54,7 +68,7 @@ function Bonocles:changeColor()
   self.printColor = self.colorPalette[self.currentColorIndex];
 end
 
-function Bonocles:print(text,IO,option)
+function Binocles:print(text,IO,option)
   if self.printer and not IO and not option then
     print("[Bonocles]: " .. text);
   elseif self.printer and option then
@@ -64,7 +78,7 @@ function Bonocles:print(text,IO,option)
   end
 end
 
-function Bonocles:watch(name,obj)
+function Binocles:watch(name,obj)
   if type(obj) == 'function' then
     self:print("Watching : " .. name);
     table.insert(self.listeners,obj);
@@ -75,7 +89,7 @@ function Bonocles:watch(name,obj)
   end
 end
 
-function Bonocles:update()
+function Binocles:update()
   for key,obj in ipairs(self.listeners) do -- Update Objects
     if type(obj) == 'function'then
       self.results[key] = obj() or 'Error!';
@@ -95,7 +109,7 @@ function Bonocles:update()
    end
 end
 
-function Bonocles:draw()
+function Binocles:draw() -- TO-DO draw Boolean values
   if self.active then
     love.graphics.setColor(self.printColor);
     local draw_y = self.draw_y;
@@ -116,7 +130,7 @@ function Bonocles:draw()
   end
 end
 
-function Bonocles:deconstructeGlobal(str)
+function Binocles:deconstructeGlobal(str)
   if string.find(str, '%.') then
     local global = string.match(str, "(%w+)%.");
     local dot = string.find(str, '.', 1, true)
@@ -134,11 +148,11 @@ function Bonocles:deconstructeGlobal(str)
   end
 end
 
-function Bonocles.GlobalHasKey(key)
+function Binocles.GlobalHasKey(key)
   return _G[key] ~= nil;
 end
 
-function Bonocles:console()
+function Binocles:console()
   self:print("[a]. Watch a Global.",false,true);
   local choice = io.read("*l");
   if choice == 'a' then
@@ -162,4 +176,12 @@ function Bonocles:console()
   end
 end
 
-return Bonocles;
+local meta = {
+    __call = function(self, ...)
+      self:init(...);
+    end
+}
+
+setmetatable(Binocles, meta);
+
+return Binocles;
