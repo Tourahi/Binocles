@@ -3,7 +3,7 @@ Binocles = require("Binocles");
 --Test variables
 test = 0;
 local bool = false;
-pox = {
+pos = {
   x = 10,
   y = 20
 }
