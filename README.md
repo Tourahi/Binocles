@@ -50,7 +50,7 @@ end
 ```
 
 Options :
-* You can send an options array in the constructer : Binocles(options);
+* You can send an options array in the constructor : Binocles(options);
 ```lua
 options.active -- if bonocles is active (drawing)  
 options.customPrinter -- activate printing to console
