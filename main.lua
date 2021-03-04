@@ -2,6 +2,7 @@ Binocles = require("Binocles");
 
 --Test variable
 test = 0;
+yolo = true;
 
 function love.load(arg)
   Binocles();
@@ -9,6 +10,8 @@ function love.load(arg)
     Binocles:watch("FPS", function() return math.floor(1/love.timer.getDelta()) end);
     -- Watch the test global variable
     Binocles:watch("test",function() return test end);
+    Binocles:watch("yolo", function() return yolo end);
+    print(type(yolo));
 end
 
 

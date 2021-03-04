@@ -7,7 +7,7 @@ local defaultOptions = {
     debugToggle =   'f1',
     consoleToggle = 'f2',
     colorToggle   = 'f3',
-    restart = false,
+    restart = true,
     watchedFiles = {
       'main.lua',
     },
@@ -79,6 +79,7 @@ function Binocles:print(text,IO,option)
 end
 
 function Binocles:watch(name,obj)
+  -- local cb = function () return
   if type(obj) == 'function' then
     self:print("Watching : " .. name);
     table.insert(self.listeners,obj);
@@ -91,8 +92,8 @@ end
 
 function Binocles:update()
   for key,obj in ipairs(self.listeners) do -- Update Objects
-    if type(obj) == 'function'then
-      self.results[key] = obj() or 'Error!';
+    if type(obj) == 'function' then
+      self.results[key] = obj();
     end
    end
    for i,file in ipairs(self.watchedFiles) do
@@ -124,6 +125,8 @@ function Binocles:draw() -- TO-DO draw Boolean values
 					love.graphics.print("      " .. i .. " : " .. v, draw_x, (draw_y + 1) * 15)
 					draw_y = draw_y + 1
 				end
+      elseif type(result) == 'boolean' then
+        love.graphics.print(self.names[nameIndice] .. " : " .. tostring(result), draw_x, (draw_y + 1) * 15)
 			end
 			draw_y = draw_y + 1
     end
