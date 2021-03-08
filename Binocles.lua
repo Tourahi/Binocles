@@ -78,14 +78,25 @@ function Binocles:print(text,IO,option)
   end
 end
 
+function containsValue(tab,value)
+    for _,val in ipairs(tab) do
+       if val == value then
+         return true;
+       end
+    end
+    return false;
+end
+
 function Binocles:watch(name,obj)
-  if type(obj) == 'function' then
-    self:print("Watching : " .. name);
-    table.insert(self.listeners,obj);
-    table.insert(self.names,name);
-  else
-    error("Obj to watch is not a function." ..
-          "Hint : wrap the obj in an anonymous function then return the object from it.");
+  if containsValue(self.names , name) == false then
+    if type(obj) == 'function' then
+      self:print("Watching : " .. name);
+      table.insert(self.listeners,obj);
+      table.insert(self.names,name);
+    else
+      error("Obj to watch is not a function." ..
+            "Hint : wrap the obj in an anonymous function then return the object from it.");
+    end
   end
 end
 
@@ -110,6 +121,7 @@ function Binocles:update()
 end
 
 function Binocles:draw() -- TO-DO draw Boolean values
+  love.graphics.push('all');
   if self.active then
     love.graphics.setColor(self.printColor);
     local draw_y = self.draw_y;
@@ -130,6 +142,7 @@ function Binocles:draw() -- TO-DO draw Boolean values
 			draw_y = draw_y + 1
     end
   end
+  love.graphics.pop();
 end
 
 function Binocles:deconstructeGlobal(str)
