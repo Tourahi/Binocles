@@ -227,10 +227,10 @@ function Binocles:console()
     if self.GlobalHasKey(varName) then
       local varName = _G[varName];
       if not deconstructedGlobal.isTable then
-         self:watch(displayName,function() return tostring(_G[Svarname]) end);
+         self:watch(displayName,function() return _G[Svarname] end);
       else
         local property  = deconstructedGlobal.property;
-        self:watch(displayName,function() return tostring(varName[tostring(property)]) end);
+        self:watch(displayName,function() return varName[tostring(property)] end);
       end
     else
       self:print("Global Does not exist.");

@@ -66,7 +66,7 @@ options.restart --[[
 
 ```
 
-Console Example :
+Console Example : !! You can not watch nested tables using the console. !!
 
 ![Screenshot from 2021-03-04 22-47-06](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-47-06.png)
 
@@ -75,6 +75,3 @@ Console Example :
 ![Screenshot from 2021-03-04 22-48-39](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-48-39.png)
 
 ![Screenshot from 2021-03-04 22-48-52](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-48-52.png)
-
-TODO :
-* Watch global tables from the console.
