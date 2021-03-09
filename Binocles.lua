@@ -8,9 +8,7 @@ local defaultOptions = {
     consoleToggle = 'f2',
     colorToggle   = 'f3',
     restart = true,
-    watchedFiles = {
-      'main.lua',
-    },
+    watchedFiles = {}
   };
 
 function Binocles:init(options)
@@ -47,6 +45,38 @@ function Binocles:init(options)
   end
 end
 
+function Binocles:setPosition (x,y)
+  self.draw_x = x;
+  self.draw_y = y;
+end
+
+function array_concat(...)
+    local t = {}
+    for n = 1,select("#",...) do
+        local arg = select(n,...)
+        if type(arg)=="table" then
+            for _,v in ipairs(arg) do
+                t[#t+1] = v
+            end
+        else
+            t[#t+1] = arg
+        end
+    end
+    return t
+end
+
+function Binocles:addColors(tab)
+  self.colorPalette = array_concat(tab,self.colorPalette);
+end
+
+function Binocles:watchFiles(tab)
+  self.watchedFiles = array_concat(tab,self.watchedFiles);
+  for i,file in ipairs(self.watchedFiles) do
+    local fileInfo = love.filesystem.getInfo(file,fileInfo);
+    assert(fileInfo,file .. ' must not exist or is in the wrong directory.');
+    self.watchedFilesInfo[i] = fileInfo;
+  end
+end
 
 
 function Binocles:keypressed(key)

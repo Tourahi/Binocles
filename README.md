@@ -14,22 +14,20 @@ The setup of a basic main.lua file is as follows:
 Note : Make sure to run the game from the console or use --console so you can see the listener output.
 
 ```lua
+
 Binocles = require("Binocles");
 
---Test variables
-test = 0;
-local bool = false;
-pos = {
-  x = 10,
-  y = 20
-}
+local test = 0;
+
 function love.load(arg)
   Binocles();
-    -- Watch the FPS
-    Binocles:watch("FPS", function() return math.floor(1/love.timer.getDelta()) end);
-    -- Watch the test global variable
-    Binocles:watch("test",function() return test end);
-    Binocles:watch("bool",function() return bool end);
+  -- Watch the FPS
+  Binocles:watch("FPS", function() return math.floor(1/love.timer.getDelta()) end);
+  Binocles:watch("test",function() return test end);
+
+  Binocles:setPosition(10 ,1);
+  Binocles:watchFiles( { 'main.lua' } ); -- Add files so the game reloads if they changed.
+  Binocles:addColors( { {0.9,0.5,0.2,1.0} } ) -- Add colors to the pallete.
 end
 
 
@@ -43,7 +41,6 @@ end
 
 function love.keypressed(key)
   test = test + 1; -- inc test every time a key is pressed
-  bool = not bool; -- change bool variable
   Binocles:keypressed(key);
 end
 
@@ -73,7 +70,7 @@ Console Example :
 
 ![Screenshot from 2021-03-04 22-47-06](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-47-06.png)
 
-* Click "f3" Use "," as a delimiter: 
+* Click "f3" Use "," as a delimiter:
 
 ![Screenshot from 2021-03-04 22-48-39](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-48-39.png)
 
@@ -81,4 +78,3 @@ Console Example :
 
 TODO :
 * Watch global tables from the console.
-
