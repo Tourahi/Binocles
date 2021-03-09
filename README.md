@@ -78,4 +78,4 @@ Console Example : !! You can not watch nested tables using the console. !!
 
 * Or you can just give the table name :
 
-![Screenshot from 2021-03-04 22-48-52](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%from%2021-03-09%09-52-33.png)
+![Screenshot from 2021-03-09 09-52-33](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-09%2009-52-33.png)
