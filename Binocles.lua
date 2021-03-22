@@ -149,7 +149,7 @@ function Binocles:update()
   end
 end
 
-function Binocles:draw() -- TO-DO draw Boolean values
+function Binocles:draw()
   love.graphics.push('all');
   if self.active then
     love.graphics.setColor(self.printColor);
