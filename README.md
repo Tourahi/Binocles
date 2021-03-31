@@ -2,12 +2,12 @@
 Debugging Love2D in a simple way.
 
 Binocles is a module based on Monocle https://github.com/kjarvi/monocle.
-this module give the ability to easily :
+this module gives the ability to easily :
   1. watch variables and complex expressions
   2. watch files and reload them when they change
   3. Reloads the game after any watched files have been changed.
   4. Custom colors
-  5. Add Global variables to the listener from the console by providing there name.
+  5. Add Global variables to the listener from the console.
 
 The setup of a basic main.lua file is as follows:
 
