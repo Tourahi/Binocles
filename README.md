@@ -1,7 +1,7 @@
 # Binocles
 Debugging Love2D in a simple way.
 
-Binocles is a module base on Monocle https://github.com/kjarvi/monocle.
+Binocles is a module based on Monocle https://github.com/kjarvi/monocle.
 this module give the ability to easily :
   1. watch variables and complex expressions
   2. watch files and reload them when they change
