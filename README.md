@@ -45,6 +45,14 @@ function love.keypressed(key)
 end
 
 ```
+For Moonscript:
+```lua
+ export Binocles = assert require "Binocles"
+ with love
+   .load = () ->
+     Binocles!
+     Binocles\watch "FPS",() -> return love.timer.getFPS!
+```
 
 Options :
 * You can send an options array in the constructor : Binocles(options);
