@@ -51,7 +51,7 @@ For Moonscript:
  with love
    .load = () ->
      Binocles!
-     Binocles\watch "FPS",() -> return love.timer.getFPS!
+     Binocles\watch "FPS",() -> love.timer.getFPS!
 ```
 
 Options :
