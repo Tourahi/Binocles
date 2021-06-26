@@ -1,4 +1,5 @@
 local Binocles = {};
+local concat = table.concat
 Binocles.__index = Bonocles;
 
 local defaultOptions = {
@@ -147,6 +148,40 @@ function Binocles:update()
       end
     end
   end
+end
+
+function Binocles.dump(value)
+  local _dump; -- recursive func
+  _dump = function(value, depth)
+    if depth == nil then
+      depth = 0;
+    end
+    local v_t = type(value);
+    if v_t == "string" then
+      return '"'.. value .. '"\n';
+    elseif v_t == "table" then
+      depth = depth + 1;
+      local lines;
+      do
+        local _lines = {};
+        local _len = 1;
+        for k, v in pairs(value) do
+          _lines[_len] = (" "):rep(depth * 4) .. "[" .. tostring(k) .. "] = " .. _dump(v, depth);
+          _len = _len + 1;
+        end
+        lines = _lines;
+      end
+      -- Moonscript Only
+      local class_name;
+      if value.__call then
+        class_name = "<" .. tostring(value.__class.__name) .. ">";
+      end
+      return tostring(class_name or "") .. "{\n" .. concat(lines) .. (" "):rep((depth - 1) * 4) .. "}\n";
+    else
+      return tostring(value) .. "\n";
+    end
+  end
+  return _dump(value);
 end
 
 function Binocles:draw()
