@@ -191,19 +191,8 @@ function Binocles:draw()
     local draw_y = self.draw_y;
     local draw_x = self.draw_x;
     for nameIndice, result in ipairs(self.results) do
-      if type(result) == 'number' or type(result) == 'string' then
-        love.graphics.print(self.names[nameIndice] .. " : " .. result, draw_x, (draw_y + 1) * 15)
-      elseif type(result) == 'table' then
-        love.graphics.print(self.names[nameIndice] .. " : Table:", draw_x, (draw_y + 1) * 15)
-        draw_y = draw_y + 1
-        for i, v in pairs(result) do
-          love.graphics.print("      " .. i .. " : " .. v, draw_x, (draw_y + 1) * 15)
-          draw_y = draw_y + 1
-        end
-      elseif type(result) == 'boolean' then
-        love.graphics.print(self.names[nameIndice] .. " : " .. tostring(result), draw_x, (draw_y + 1) * 15)
-      end
-      draw_y = draw_y + 1
+      love.graphics.print(self.names[nameIndice] .. " : " .. self.dump(result), draw_x, (draw_y + 1) * 15);
+      draw_y = draw_y + 1;
     end
   end
   love.graphics.pop();
