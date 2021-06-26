@@ -3,11 +3,13 @@ Debugging Love2D in a simple way.
 
 Binocles is a module based on Monocle https://github.com/kjarvi/monocle.
 this module gives the ability to easily :
+
   1. watch variables and complex expressions
   2. watch files and reload them when they change
   3. Reloads the game after any watched files have been changed.
   4. Custom colors
   5. Add Global variables to the listener from the console.
+  6. Since the latest updates now you can watch nested tables recursively.
 
 The setup of a basic main.lua file is as follows:
 
@@ -18,16 +20,34 @@ Note : Make sure to run the game from the console or use --console so you can se
 Binocles = require("Binocles");
 
 local test = 0;
+local player = {
+  healt = 100,
+  x = 10,
+  y = 23.3,
+  skills_lvl = {
+    magic = 2,
+    conjuring = 4,
+    tinkering = 5,
+    sub_skills = {
+      magical_tinkering = 4
+    }
+  }
+}
 
 function love.load(arg)
   Binocles();
   -- Watch the FPS
   Binocles:watch("FPS", function() return math.floor(1/love.timer.getDelta()) end);
   Binocles:watch("test",function() return test end);
+  Binocles:watch("player",function() return player end);
 
   Binocles:setPosition(10 ,1);
   Binocles:watchFiles( { 'main.lua' } ); -- Add files so the game reloads if they changed.
   Binocles:addColors( { {0.9,0.5,0.2,1.0} } ) -- Add colors to the pallete.
+
+  --------------------------------------------------------------------------
+  -- You can use Binocles.dump to print an object to the console directly.--
+  --------------------------------------------------------------------------
 end
 
 
@@ -45,19 +65,23 @@ function love.keypressed(key)
 end
 
 ```
+* Result :
+  * ![Screenshot from 2021-03-04 22-47-06](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-06-26%2012-13-57.png)
+
+
 For Moonscript:
 ```lua
  export Binocles = assert require "Binocles"
  with love
    .load = () ->
      Binocles!
-     Binocles\watch "FPS",() -> love.timer.getFPS!
+     Binocles\watch "FPS",-> love.timer.getFPS!
 ```
 
 Options :
 * You can send an options array in the constructor : Binocles(options);
 ```lua
-options.active -- if bonocles is active (drawing)  
+options.active -- if bonocles is active (drawing)
 options.customPrinter -- activate printing to console
 options.draw_x -- x pos of the Bonocles instance (Used in :draw())
 options.draw_y  -- y pos of the Bonocles instance (Used in :draw())
@@ -74,7 +98,7 @@ options.restart --[[
 
 ```
 
-Console Example : !! You can not watch nested tables using the console. !!
+Console Example :
 
 ![Screenshot from 2021-03-04 22-47-06](https://github.com/maromaroXD/Binocles/blob/master/public/imgs/Screenshot%20from%202021-03-04%2022-47-06.png)
 
