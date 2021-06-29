@@ -193,11 +193,13 @@ function Binocles:draw()
     for nameIndice, result in ipairs(self.results) do
       love.graphics.print(self.names[nameIndice] .. " : " .. self.dump(result), draw_x, (draw_y + 1) * 15);
       local _, count = self.dump(result):gsub('\n', '\n');
+
       if count == 1 then
         draw_y = draw_y + 1;
       else
         draw_y = draw_y + count + 2;
       end
+
     end
   end
   love.graphics.pop();
